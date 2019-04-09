@@ -19,10 +19,15 @@
 	<div class="container">
 	<!-- 标题 -->
 		<div class="row">
-			<div class="col-md-12">SSM_CRUD</div>
+			<div class="col-md-12"><h1><em>SSM_CRUD</em></h1></div>
 		</div>
 	<!-- 按钮 -->
-		<div class="row"></div>
+		<div class="row">
+			<div class="col-md-4 col-md-offset-8">
+				<button class="btn btn-success">添加</button>
+				<button class="btn btn-danger">删除</button>
+			</div>
+		</div>
 	<!-- 表格 -->
 		<div class="row"></div>
 	<!-- 分页信息 -->

@@ -24,39 +24,39 @@ import com.xiaochen.crud.bean.TblEmp;
  * @author 26631
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations= {"classpath:applicationContext.xml","classpath:Springmvc.xml"})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@WebAppConfiguration
+//@ContextConfiguration(locations= {"classpath:applicationContext.xml","classpath:Springmvc.xml"})
 public class MvcTest {
-	//传入Springmvc的ioc
-	@Autowired
-	WebApplicationContext context;
-	//虚拟mvc请求
-	MockMvc mockMvc;
-	@Before
-	public void initMockMvc() {
-		mockMvc=MockMvcBuilders.webAppContextSetup(context).build();
-	}
+//	//传入Springmvc的ioc
+//	@Autowired
+//	WebApplicationContext context;
+//	//虚拟mvc请求
+//	MockMvc mockMvc;
+//	@Before
+//	public void initMockMvc() {
+//		mockMvc=MockMvcBuilders.webAppContextSetup(context).build();
+//	}
 	@Test
 	public void testPage() throws Exception {
-		//模拟请求拿到返回值
-		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("current","5")).andReturn();
-		//请求成功后，请求域中会有pageInfo,取出验证
-		MockHttpServletRequest request = mvcResult.getRequest();
-		PageInfo pageInfo=(PageInfo) request.getAttribute("pageInfo");
-		System.out.println("当前页码"+pageInfo.getPageNum());
-		System.out.println("总页码"+pageInfo.getPages());
-		System.out.println("总记录数"+pageInfo.getTotal());
-		System.out.println("在页面需要连续显示页码");
-		int[] nums = pageInfo.getNavigatepageNums();
-		for (int i : nums) {
-			System.out.print("	"+i+" ");
-		}
-		//-------------------------------------------
-		//获取员工信息
-		List<TblEmp> list = pageInfo.getList();
-		for (TblEmp tblEmp : list) {
-			System.out.println("ID"+tblEmp.getEmpId()+"===>name"+tblEmp.getEmpName());
-		}
+//		//模拟请求拿到返回值
+//		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("current","5")).andReturn();
+//		//请求成功后，请求域中会有pageInfo,取出验证
+//		MockHttpServletRequest request = mvcResult.getRequest();
+//		PageInfo pageInfo=(PageInfo) request.getAttribute("pageInfo");
+//		System.out.println("当前页码"+pageInfo.getPageNum());
+//		System.out.println("总页码"+pageInfo.getPages());
+//		System.out.println("总记录数"+pageInfo.getTotal());
+//		System.out.println("在页面需要连续显示页码");
+//		int[] nums = pageInfo.getNavigatepageNums();
+//		for (int i : nums) {
+//			System.out.print("	"+i+" ");
+//		}
+//		//-------------------------------------------
+//		//获取员工信息
+//		List<TblEmp> list = pageInfo.getList();
+//		for (TblEmp tblEmp : list) {
+//			System.out.println("ID"+tblEmp.getEmpId()+"===>name"+tblEmp.getEmpName());
+//		}
 	}
 }

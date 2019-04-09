@@ -19,29 +19,29 @@ import com.xiaochen.crud.dao.TblEmpMapper;
  * @author 26631
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations= {"classpath:applicationContext.xml"})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations= {"classpath:applicationContext.xml"})
 public class MapperTest {
-	@Autowired
-	TblEmpMapper tblEmpMapper;
-	@Autowired
-	TblDeptMapper tblDeptMapper;
-	@Autowired
-	SqlSession sqlSession;
-	@Test
+//	@Autowired
+//	TblEmpMapper tblEmpMapper;
+//	@Autowired
+//	TblDeptMapper tblDeptMapper;
+//	@Autowired
+//	SqlSession sqlSession;
+//	@Test
 	public void testCURD() {
-		System.out.println(tblDeptMapper);
-		//插入部门
-//		tblDeptMapper.insert(new TblDept(null, "开发部"));
-//		tblDeptMapper.insert(new TblDept(null, "教学部"));
-		//插入员工
-		tblEmpMapper.insert(new TblEmp(null, "jack", "M", "jack@xiaochen.com", 1));
-		//批量生成多个员工，使用SQLSession
-		TblEmpMapper mapper = sqlSession.getMapper(TblEmpMapper.class);
-		for (int i = 0; i < 1000; i++) {
-			String substring = UUID.randomUUID().toString().substring(0, 5)+i;
-			mapper.insert(new TblEmp(null, substring, "M", substring+"@xiaochen.com", 1));
-		}
-		System.out.println("批量完成");
+//		System.out.println(tblDeptMapper);
+//		//插入部门
+////		tblDeptMapper.insert(new TblDept(null, "开发部"));
+////		tblDeptMapper.insert(new TblDept(null, "教学部"));
+//		//插入员工
+//		tblEmpMapper.insert(new TblEmp(null, "jack", "M", "jack@xiaochen.com", 1));
+//		//批量生成多个员工，使用SQLSession
+//		TblEmpMapper mapper = sqlSession.getMapper(TblEmpMapper.class);
+//		for (int i = 0; i < 1000; i++) {
+//			String substring = UUID.randomUUID().toString().substring(0, 5)+i;
+//			mapper.insert(new TblEmp(null, substring, "M", substring+"@xiaochen.com", 1));
+//		}
+//		System.out.println("批量完成");
 	}
 }

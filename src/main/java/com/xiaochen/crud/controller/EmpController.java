@@ -37,6 +37,6 @@ public class EmpController {
 		//封装了详细的分页信息，包括我们查询出来的数据，传入连续显示的页面
 		PageInfo pageInfo=new PageInfo(emps,5);
 		model.addAttribute("pageInfo", pageInfo);
-		return "list";
+		return "/list";
 	}
 }

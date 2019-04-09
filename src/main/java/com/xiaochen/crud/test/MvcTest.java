@@ -40,7 +40,7 @@ public class MvcTest {
 	@Test
 	public void testPage() throws Exception {
 		//模拟请求拿到返回值
-		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("current","1")).andReturn();
+		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("current","5")).andReturn();
 		//请求成功后，请求域中会有pageInfo,取出验证
 		MockHttpServletRequest request = mvcResult.getRequest();
 		PageInfo pageInfo=(PageInfo) request.getAttribute("pageInfo");
@@ -50,7 +50,7 @@ public class MvcTest {
 		System.out.println("在页面需要连续显示页码");
 		int[] nums = pageInfo.getNavigatepageNums();
 		for (int i : nums) {
-			System.out.print("	"+i);
+			System.out.print("	"+i+" ");
 		}
 		//-------------------------------------------
 		//获取员工信息

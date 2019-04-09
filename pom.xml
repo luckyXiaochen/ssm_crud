@@ -76,6 +76,7 @@
 		    <groupId>javax.servlet</groupId>
 		    <artifactId>jstl</artifactId>
 		    <version>1.2</version>
+		    <scope>provided</scope>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
@@ -100,4 +101,24 @@
 		    <version>5.0.0</version>
 		</dependency>
   </dependencies>
+  <build>
+  	<plugins>
+			<!-- 设置编译版本为1.8 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<!-- maven内置 的tomcat7插件 -->
+			<plugin>
+	        	<groupId>org.apache.tomcat.maven</groupId>
+	        	<artifactId>tomcat7-maven-plugin</artifactId>
+	        	<version>2.2</version>
+			</plugin>
+		</plugins>
+  </build>
 </project>

@@ -40,8 +40,11 @@
 			<!-- 扫描所有的dao接口的实现，加入到IOC容器 -->
 			<property name="basePackage" value="com.xiaochen.crud.dao"></property>
 		</bean>
-		
-		
+		<!-- 配置一个可以执行批量的SqlSession -->
+		<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+			<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"></constructor-arg>
+			<constructor-arg name="executorType" value="BATCH"></constructor-arg>
+		</bean>
 		
 		<!-- 事务控制的配置 -->
 		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

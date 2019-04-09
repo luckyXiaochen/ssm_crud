@@ -16,9 +16,8 @@ public class TblDept {
     public String getDeptName() {
         return deptName;
     }
-	private void settb() {
-		// TODO Auto-generated method stub
-	
+	public TblDept() {
+		super();
 	}
     public TblDept(Integer deptId, String deptName) {
 		super();

@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+    <jsp:forward page="/emps"></jsp:forward>
 <!-- 引入jQuery -->
 <script type="text/javascript" src="static/js/jquery.min.js"></script>
 <!-- 引入样式 -->

@@ -61,7 +61,9 @@ public class TblEmp {
     public void setdId(Integer dId) {
         this.dId = dId;
     }
-
+    public TblEmp() {
+		super();
+	}
 	public TblEmp(Integer empId, String empName, String gender, String email, Integer dId) {
 		super();
 		this.empId = empId;
@@ -70,7 +72,5 @@ public class TblEmp {
 		this.email = email;
 		this.dId = dId;
 	}
-    public TblEmp() {
-		super();
-	}
+   
 }

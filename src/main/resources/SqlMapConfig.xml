@@ -11,4 +11,8 @@
   	<typeAliases>
   		<package name="com.xiaochen.crud.bean"/>
   	</typeAliases>
+  	<!-- 定义pageHelpeer -->
+  	<plugins>
+    	<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+</plugins>
  </configuration>

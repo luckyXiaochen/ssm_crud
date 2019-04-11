@@ -1,18 +1,71 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-    <jsp:forward page="/emps"></jsp:forward>
+<title>员工列表</title>
+<%
+	pageContext.setAttribute("APP_PATH",request.getContextPath());
+%>
 <!-- 引入jQuery -->
-<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<script type="text/javascript" src="${APP_PATH}/static/js/jquery.min.js"></script>
 <!-- 引入样式 -->
-<link href="static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<!-- 搭建显示页面 -->
+	<div class="container">
+	<!-- 标题 -->
+		<div class="row">
+			<div class="col-md-12"><h1><em>SSM_CRUD</em></h1></div>
+		</div>
+	<!-- 按钮 -->
+		<div class="row">
+			<div class="col-md-4 col-md-offset-11">
+				<button class="btn btn-success btn-sm">添加</button>
+				<button class="btn btn-danger btn-sm">删除</button>
+			</div>
+		</div>
+	<!-- 表格 -->
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-hover">
+					<tr>
+						<th>#</th>
+						<th>empName</th>
+						<th>gender</th>
+						<th>email</th>
+						<th>deptName</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作</th>
+					</tr>
+					
+				</table>
+			</div>
+		</div>
+	<!-- 分页信息 -->
+		<div class="row">
+			<div class="col-md-6">
+				当前页数：,总页数:,总条数：
+			</div>
+			<div class="col-md-6">
+				
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			$.ajax({
+				url:"${APP_PATH}/emps",
+				data:"current=1",
+				type:"get",
+				success:function(data){
+					console.log(data);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

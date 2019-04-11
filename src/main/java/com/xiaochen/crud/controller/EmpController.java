@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xiaochen.crud.bean.Msg;
 import com.xiaochen.crud.bean.TblEmp;
 import com.xiaochen.crud.service.EmpService;
 /**
@@ -26,7 +28,7 @@ public class EmpController {
 	 * 查询员工数据(分页查询)
 	 * @return
 	 */
-	@RequestMapping("/emps")
+	//@RequestMapping("/emps")
 	public String getEmps(@RequestParam(value="current",defaultValue="1")Integer current,Model model) {
 		//引入pageHelper分页插件
 		//在查询之前只需要调用，插入页码，每页的大小
@@ -38,5 +40,19 @@ public class EmpController {
 		PageInfo pageInfo=new PageInfo(emps,5);
 		model.addAttribute("pageInfo", pageInfo);
 		return "/list";
+	}
+	//使用json返回
+	@RequestMapping("/emps")
+	@ResponseBody
+	public Msg getEmpsWithJson(@RequestParam(value="current",defaultValue="1")Integer current,Model model) {
+		//引入pageHelper分页插件
+		//在查询之前只需要调用，插入页码，每页的大小
+		PageHelper.startPage(current, 10);
+		//startPage后面跟着的查询为分页查询
+		List<TblEmp> emps=empService.getAll();
+		//使用pageInfo来包装查询后的结果,只需要将pageInfo交给页面
+		//封装了详细的分页信息，包括我们查询出来的数据，传入连续显示的页面
+		PageInfo pageInfo=new PageInfo(emps,5);
+		return Msg.success().add("pageInfo", pageInfo);
 	}
 }

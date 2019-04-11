@@ -32,7 +32,7 @@ public class EmpController {
 	public String getEmps(@RequestParam(value="current",defaultValue="1")Integer current,Model model) {
 		//引入pageHelper分页插件
 		//在查询之前只需要调用，插入页码，每页的大小
-		PageHelper.startPage(current, 10);
+		PageHelper.startPage(current, 8);
 		//startPage后面跟着的查询为分页查询
 		List<TblEmp> emps=empService.getAll();
 		//使用pageInfo来包装查询后的结果,只需要将pageInfo交给页面
@@ -47,7 +47,7 @@ public class EmpController {
 	public Msg getEmpsWithJson(@RequestParam(value="current",defaultValue="1")Integer current,Model model) {
 		//引入pageHelper分页插件
 		//在查询之前只需要调用，插入页码，每页的大小
-		PageHelper.startPage(current, 10);
+		PageHelper.startPage(current, 8);
 		//startPage后面跟着的查询为分页查询
 		List<TblEmp> emps=empService.getAll();
 		//使用pageInfo来包装查询后的结果,只需要将pageInfo交给页面

@@ -32,12 +32,14 @@
 		    <label class="col-sm-2 control-label">empName</label>
 		    <div class="col-sm-10">
 		      <input type="text" name="empName" class="form-control" id="emp_add_empName" placeholder="empName">
+		   	   <span class="help-block"></span>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label class="col-sm-2 control-label">email</label>
 		    <div class="col-sm-10">
 		      <input type="text" name="email" class="form-control" id="emp_add_email" placeholder="email@xiaochen.com">
+		      <span class="help-block"></span>
 		    </div>
 		  </div>
 		  
@@ -65,7 +67,7 @@
 	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary">添加</button>
+        <button type="button" class="btn btn-primary" id="emp_save_btn">添加</button>
       </div>
     </div>
   </div>
@@ -115,6 +117,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		var totalRecord;
 		$(function(){
 			//去首页
 			to_page(1);
@@ -160,8 +163,9 @@
 		}
 		 //显示分页信息
 		function build_page_info(data){
-			 $("#page_info_area p").empty();
+			$("#page_info_area p").empty();
 			$("#page_info_area p").append("当前页数："+data.map.pageInfo.pageNum+",总页数:"+data.map.pageInfo.pages+",总条数："+data.map.pageInfo.total);
+			totalRecord=data.map.pageInfo.pages;
 		}
 		//显示分页条信息
 		function bulid_page_nav(data){ 
@@ -210,6 +214,8 @@
 		}
 		//点击新增按钮弹出模态框
 		$("#emp_add_modal_btn").click(function(){
+			//点击之前就清空form
+			$("#emp_add_modal form")[0].reset();
 			//发送ajax请求，查询部门信息，显示在模态框
 			getDepts();
 			//弹出模态框
@@ -232,6 +238,91 @@
 				}
 			});
 		}
+		//添加校验
+		function validate_add_form(){
+			//拿到需要校验的值；
+			var empName=$("#emp_add_empName").val();
+			var empEmail=$("#emp_add_email").val();
+			var regName=/(^[a-zA-Z][a-zA-Z0-9_]{6,15}$)|(^[\u2E80-\u9FFF]{2,5})/;
+			var regEmail=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+			//校验empName
+			if(!regName.test(empName)){
+				show_validate_msg("#emp_add_empName","error","用户名必须是2-5位中午或者6-15位英文或数字的组合");
+			/* 	$("#emp_add_empName").parent().addClass("has-error");
+				$("#emp_add_empName").next("span").text("用户名可以是2-5位中午或者6-15位英文或数字的组合"); */
+				return false;
+			}else{
+				show_validate_msg("#emp_add_empName","success","");
+				/* $("#emp_add_empName").parent().addClass("has-success");
+				$("#emp_add_empName").next("span").text(""); */
+			} 
+			//校验email
+			if(!regEmail.test(empEmail)){
+				show_validate_msg("#emp_add_email","error","邮箱格式不正确");
+				/* $("#emp_add_email").parent().addClass("has-error");
+				$("#emp_add_email").next("span").text("邮箱格式不正确"); */
+				return false;
+			}else{
+				show_validate_msg("#emp_add_email","success","");
+				/* $("#emp_add_email").parent().addClass("has-success");
+				$("#emp_add_email").next("span").text(""); */
+			}
+			return true;
+		}
+		function show_validate_msg(ele,status,msg){
+			//清除当前元素的校验状态
+			$(ele).parent().removeClass("has-success has-error");
+			$(ele).next("span").text("");
+			if("success"==status){
+				$(ele).parent().addClass("has-success");
+				$(ele).next("span").text(msg);
+			}else if("error"==status){
+				$(ele).parent().addClass("has-error");
+				$(ele).next("span").text(msg);
+			}
+		}
+		//检查用户名是否可用
+		$("#emp_add_empName").change(function(){
+			var empName=this.value;
+			//发送ajax校验
+			$.ajax({
+				url:"${APP_PATH}/checkuser",
+				data:"empName="+empName,
+				type:"POST",
+				success:function(data){
+					if(data.code==100){
+						show_validate_msg("#emp_add_empName","success","用户名可用");
+						$("#emp_save_btn").attr("ajax_va","success");
+					}else if(data.code==200){
+						show_validate_msg("#emp_add_empName","error","用户名不可用");
+						$("#emp_save_btn").attr("ajax_va","error");
+					}
+				}
+			});
+		});
+		$("#emp_save_btn").click(function(){
+			//将模态框填写的表单数据交给服务器
+			//如果姓名一样就不进行保存
+			if($(this).attr("ajax_va")=="error"){
+				return false;
+			}
+			//发送ajax请求前先进行校验
+			if(!validate_add_form()){
+				return false;
+			}
+			//发送ajax请求保存员工
+			$.ajax({
+				url:"${APP_PATH}/emp",
+				type:"POST",
+				data:$("#emp_add_modal form").serialize(),
+				success:function(data){
+					//关闭模态框
+					$("#emp_add_modal").modal('hide');
+					//来到最后一页
+					to_page(totalRecord);
+				}
+			});
+		});
 	</script>
 </body>
 </html>

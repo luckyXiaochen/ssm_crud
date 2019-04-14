@@ -37,6 +37,7 @@
 		</bean>
 		<!-- 配置扫描器，将mybatis接口的实现加入到IOC容器 -->
 		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		
 			<!-- 扫描所有的dao接口的实现，加入到IOC容器 -->
 			<property name="basePackage" value="com.xiaochen.crud.dao"></property>
 		</bean>

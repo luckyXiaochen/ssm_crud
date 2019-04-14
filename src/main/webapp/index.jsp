@@ -216,6 +216,11 @@
 		$("#emp_add_modal_btn").click(function(){
 			//点击之前就清空form
 			$("#emp_add_modal form")[0].reset();
+			//清空添加的class属性和span标签内容
+			$("#emp_add_empName").parent().removeClass("has-success has-error");
+			$("#emp_add_empName").next("span").text("");
+			$("#emp_add_email").parent().removeClass("has-success has-error");
+			$("#emp_add_email").next("span").text("");
 			//发送ajax请求，查询部门信息，显示在模态框
 			getDepts();
 			//弹出模态框
@@ -247,7 +252,7 @@
 			var regEmail=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 			//校验empName
 			if(!regName.test(empName)){
-				show_validate_msg("#emp_add_empName","error","用户名必须是2-5位中午或者6-15位英文或数字的组合");
+				show_validate_msg("#emp_add_empName","error","用户名必须是2-5位中文或者6-15位英文或数字的组合");
 			/* 	$("#emp_add_empName").parent().addClass("has-error");
 				$("#emp_add_empName").next("span").text("用户名可以是2-5位中午或者6-15位英文或数字的组合"); */
 				return false;
@@ -269,6 +274,7 @@
 			}
 			return true;
 		}
+		//显示校验是否成功
 		function show_validate_msg(ele,status,msg){
 			//清除当前元素的校验状态
 			$(ele).parent().removeClass("has-success has-error");
@@ -294,7 +300,7 @@
 						show_validate_msg("#emp_add_empName","success","用户名可用");
 						$("#emp_save_btn").attr("ajax_va","success");
 					}else if(data.code==200){
-						show_validate_msg("#emp_add_empName","error","用户名不可用");
+						show_validate_msg("#emp_add_empName","error",data.map.va_msg);
 						$("#emp_save_btn").attr("ajax_va","error");
 					}
 				}

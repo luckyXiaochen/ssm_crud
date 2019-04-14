@@ -71,12 +71,16 @@ public class EmpController {
 	@RequestMapping("/checkuser")
 	@ResponseBody
 	public Msg checkuser(@RequestParam("empName")String empName) {
+		//先判断用户名是否合法
+		String regx="(^[a-zA-Z0-9_-]{6,15}$)|(^[\\u2E80-\\u9FFF]{2,5})";
+		if(!empName.matches(regx)) {
+			return Msg.file().add("va_msg", "用户名必须是2-5位中文或者6-15位英文或数字的组合!!!");
+		}
 		boolean flag=empService.checkuser(empName);
-		System.out.println("ss");
 		if(flag) {
 			return Msg.success();
 		}else {
-			return Msg.file();
+			return Msg.file().add("va_msg", "用户名不可用");
 		}
 	}
 }

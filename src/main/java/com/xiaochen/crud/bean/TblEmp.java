@@ -1,12 +1,19 @@
 package com.xiaochen.crud.bean;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+
 public class TblEmp {
     private Integer empId;
-
+    //使用JSR303校验
+    @Pattern(regexp="(^[a-zA-Z0-9_-]{6,15}$)|(^[\\\\u2E80-\\\\u9FFF]{2,5})"
+    			,message="用户名必须是2-5位中文或者6-15位英文或数字的组合!!!")
     private String empName;
 
     private String gender;
-
+    @Pattern(regexp="^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"
+    		,message="邮箱格式不正确！！！")
     private String email;
 
     private Integer dId;

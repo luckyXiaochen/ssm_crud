@@ -36,5 +36,35 @@ public class EmpService {
 		long flag=empMapper.countByExample(tblEmpExample);
 		return flag==0;
 	}
+	/**
+	 * 按照员工id查询
+	 * @param id
+	 * @return
+	 */
+	public TblEmp getEmp(Integer id) {
+		// TODO Auto-generated method stub
+		return empMapper.selectByPrimaryKey(id);
+	}
+	/**
+	 * 按照员工id修改
+	 * @param emp
+	 */
+	public void updateEmp(TblEmp emp) {
+		empMapper.updateByPrimaryKeySelective(emp);
+	}
+	/**
+	 * 按照员工id删除
+	 * @param tblEmp
+	 */
+	public void deleteEmp(Integer empId) {
+		empMapper.deleteByPrimaryKey(empId);
+	}
+	//批量删除
+	public void deleteBatch(List<Integer> ids) {
+		TblEmpExample tblEmpExample=new TblEmpExample();
+		Criteria criteria = tblEmpExample.createCriteria();
+		criteria.andEmpIdIn(ids);
+		empMapper.deleteByExample(tblEmpExample);
+	}
 
 }

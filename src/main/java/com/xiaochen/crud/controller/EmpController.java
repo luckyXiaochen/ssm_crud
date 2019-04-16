@@ -42,7 +42,7 @@ public class EmpController {
 	public String getEmps(@RequestParam(value="current",defaultValue="1")Integer current,Model model) {
 		//引入pageHelper分页插件
 		//在查询之前只需要调用，插入页码，每页的大小
-		PageHelper.startPage(current, 8);
+		PageHelper.startPage(current, 6);
 		//startPage后面跟着的查询为分页查询
 		List<TblEmp> emps=empService.getAll();
 		//使用pageInfo来包装查询后的结果,只需要将pageInfo交给页面
@@ -66,10 +66,11 @@ public class EmpController {
 		return Msg.success().add("pageInfo", pageInfo);
 	}
 	/**
-	 * 员工添加
+	 * 员工添加后端使用了JSR303校验
 	 */
 	@RequestMapping(value="/emp",method=RequestMethod.POST)
 	@ResponseBody
+	//使用@Vaild代表数据需要后端校验，BindingResult用来封装校验的结果
 	public Msg saveEmp(@Valid TblEmp tblEmp,BindingResult result) {
 		//后端校验失败不进行保存
 		if(result.hasErrors()) {
@@ -91,6 +92,7 @@ public class EmpController {
 	 */
 	@RequestMapping("/checkuser")
 	@ResponseBody
+	//使用@RequestParam来确定是前端页面传来的数据
 	public Msg checkuser(@RequestParam("empName")String empName) {
 		//先判断用户名是否合法
 		String regx="(^[a-zA-Z0-9_-]{6,15}$)|(^[\\u2E80-\\u9FFF]{2,5})";
@@ -107,6 +109,7 @@ public class EmpController {
 	//根据id查询
 	@RequestMapping(value="/getEmps/{id}",method=RequestMethod.GET)
 	@ResponseBody
+	//@PathVariable,用来获取传来的参数信息
 	public Msg getEmp(@PathVariable("id")Integer id) {
 		TblEmp tblEmp=empService.getEmp(id);
 		return Msg.success().add("emp", tblEmp);
